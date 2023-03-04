@@ -1,17 +1,15 @@
 from django.contrib.auth.models import User
 from django.db.models import F
 from django.shortcuts import render, get_object_or_404
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, BasePermission
-from rest_framework.viewsets import ModelViewSet, ViewSet
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.viewsets import ViewSet
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import CarSerializer, UserSerializer, BookSerializer, BookReaderSerializer
 from .models import Car, Book, BookReaderRelation
-from rest_framework.pagination import PageNumberPagination
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 def get_tokens_for_user(user):
@@ -21,9 +19,6 @@ def get_tokens_for_user(user):
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
-
-# print(get_tokens_for_user(get_object_or_404(User.objects.all(), pk=1)))
-
 
 def home(request):
     tokens = get_tokens_for_user(get_object_or_404(User.objects.all(), pk=1))

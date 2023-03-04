@@ -1,8 +1,5 @@
 from django.contrib.auth.models import User
-from django.db import transaction
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 from .models import Car, Book, BookReaderRelation
 
 
@@ -16,7 +13,6 @@ class BookReaderSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    # author = Book.author.username
     author_name = serializers.CharField()
     category = serializers.CharField()
 
